@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Categorías</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">HOME</a></li>
+                <li><a href="/edit_class">EDIT DEFAULTS</a></li>
+                <li><h1 class="site-title">recicla!</h1></li>
+                <li><a href="/grafico">SUMMARY</a></li>
+                <li><a href="/update_custom_class">ADD CLASSES</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h4>EDITAR CATEGORÍAS</h4>
+        <ul>
+            {% for key, value in categorias.items() %}
+                <li>
+                    <form action="/edit_class" method="post">
+                    <label for="{{ key }}">{{ value }}:</label>
+                    <input type="text" class="new-name-ad" id="{{ key }}" name="new_name" value="{{ value }}">
+                    <input type="hidden" name="old_name" value="{{ value }}">
+                    <button id="advanced-accept" type="submit">✔</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+</body>
+</html>

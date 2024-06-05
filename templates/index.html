@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recycling</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">HOME</a></li>
+                <li><a href="/edit_class">EDIT DEFAULTS</a></li>
+                <li><h1 class="site-title">recicla!</h1></li>
+                <li><a href="/grafico">SUMMARY</a></li>
+                <li><a href="/update_custom_class">ADD CLASSES</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="upload-container">
+        <h1>upload</h1>
+        <form id="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+            <div class="filem">
+              <input type="file" name="file" id="file-input">
+              <label for="file-input" class="custom-file-upload">
+                Select File
+              </label>
+            <button type="submit" class="upload-button">♻</button>
+            </div>
+        </form>
+        <h1 id="or-text">or</h1>
+        <button id="camera-button" class="custom-file-upload">Take Photo</button>
+        <video id="video" width="320" height="240" autoplay></video>
+        <canvas id="canvas" style="display:none;"></canvas>
+        <button id="capture-button" class="upload-button" style="display:none;">Capture</button>
+        <form id="photo-form" action="/upload_photo" method="post" enctype="multipart/form-data" style="display:none;">
+            <input type="hidden" name="photo" id="photo-input">
+            <button type="submit" class="upload-button">Upload Photo</button>
+        </form>
+    </div>
+
+    {% if predicted_label %}
+        <p id="predictedlbl">categorizado como: {{ predicted_label }}</p>
+        {% if img_data %}
+            <img class="uploaded-ima" src="data:image/jpeg;base64,{{ img_data }}" alt="Uploaded Image">
+        {% endif %}
+        <div class="botonc">
+        <form action="/customize" method="POST">
+            <input type="hidden" name="predicted_label" value="{{ predicted_label }}">
+            <button type="submit" class="personalizarbtn">personalizar</button>
+        </form>
+        <button type="button" id="continue">continuar</button></div>
+        <style>
+            .upload-container {
+                display: none;
+            }
+        </style>
+        <div class="clasescstm">
+        {% if show_customize %}
+            <h2>clases:</h2>
+            <form action="/classify_custom_class" method="POST">
+                <select name="selected_class" class="selected_class">
+                    {% for class in custom_classes %}
+                        <option value="{{ class }}">{{ class }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="cstmaccept">aceptar</button>
+            </form>
+        {% endif %}
+        </div>
+    {% else %}
+        <style>
+            #continue, #customize {
+                display: none;
+            }
+        </style>
+    {% endif %}
+</body>
+<script>
+    window.onload = function() {
+        var uploadedImage = document.querySelector('.uploaded-ima');
+        var uploadContainer = document.querySelector('.upload-container');
+
+        if (uploadedImage) {
+            uploadContainer.style.height = 'auto';
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.custom-file-upload').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.querySelector('#file-input').click();
+        });
+        var continueButton = document.getElementById('continue');
+        if (continueButton) {
+            continueButton.addEventListener('click', function() {
+                window.location.href = "/";
+            });
+        }
+    });
+
+    var continueButton = document.getElementById('continue');
+        if (continueButton) {
+                continueButton.addEventListener('click', function() {
+                        document.getElementById('upload-form').style.display = 'block';
+                        document.getElementById('or-text').style.display = 'block';
+         });
+    }
+
+    var cstmacceptButton = document.querySelector('.cstmaccept');
+        if (cstmacceptButton) {
+            cstmacceptButton.addEventListener('click', function() {
+                document.getElementById('upload-form').style.display = 'block';
+                document.getElementById('or-text').style.display = 'block';
+            });
+    }
+
+    const cameraButton = document.getElementById('camera-button');
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const captureButton = document.getElementById('capture-button');
+    const photoForm = document.getElementById('photo-form');
+    const photoInput = document.getElementById('photo-input');
+
+    cameraButton.addEventListener('click', async () => {
+        cameraButton.style.display = 'none';
+        captureButton.style.display = 'inline';
+        photoForm.style.display = 'inline';
+        video.style.display = 'inline';
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+        document.getElementById('upload-form').style.display = 'none';
+        document.getElementById('or-text').style.display = 'none';
+    });
+
+    captureButton.addEventListener('click', () => {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        const dataURL = canvas.toDataURL('image/jpeg');
+        photoInput.value = dataURL.split(',')[1];
+        captureButton.style.display = 'none';
+        video.style.display = 'none';
+    });
+
+</script>
+</html>

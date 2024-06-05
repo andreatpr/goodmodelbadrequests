@@ -1,0 +1,188 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    text-align: center;
+    background-color: #F2E9E0;
+}
+
+/*header*/
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+    display: flex;
+}
+
+nav ul li {
+    margin-right: 40px;
+    margin-left:35px;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+}
+
+nav ul li a{
+    text-decoration:none;
+    font-size:small;
+    color: black;
+}
+
+nav ul li a:hover{
+    color: darkolivegreen;
+}
+/*button main page*/
+.upload-button {
+    border: none;
+    cursor: pointer;
+    background: none;
+    padding: 0;
+    font-size:larger;
+    color:darkolivegreen;
+    transition: font-size 0.5s ease;
+}
+
+.upload-button:hover{
+    font-size:30px;
+}
+
+.filem {
+    display: flex;
+    margin-bottom:15px;
+    align-items: center;
+    gap: 10px;
+}
+/*container*/
+.upload-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; 
+}
+
+/*image subida*/
+.uploaded-ima {
+    width: 500px;
+    height: 300px; 
+    object-fit: cover;
+}
+
+.filem input[type="file"] {
+    display: none;
+}
+
+/*select file opt*/
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 2px solid #4CAF50;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.custom-file-upload:hover {
+    background-color: #45a049;
+    border-color: #45a049;
+}
+
+/*fonts*/
+#predictedlbl {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.botonc{
+    display:flex;
+    margin-top:25px;
+}
+.personalizarbtn{
+    margin-right:10px;
+}
+.personalizarbtn, #continue{
+    padding: 10px 18px;
+    cursor: pointer;
+    border: 2px solid #4a4a4a;
+    border-radius: 5px;
+    background-color: #4a4a4a;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: all 0.3s ease;
+}
+
+#continue{
+  padding: 10px 30px;
+}
+
+#continue:hover{
+  padding: 12px 32px;
+  font-size: 19px;
+}
+.personalizarbtn:hover{
+  padding: 12px 20px;
+  font-size: 19px;
+}
+
+.clasescstm{
+  margin-bottom:25px;
+}
+
+.selected_class {
+    border: none !important;
+    outline: none !important;
+    background: white;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    border-radius: 5px;
+    appearance: none; 
+    cursor:pointer;
+}
+
+.selected_class::after {
+    content: "▼";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    cursor:pointer;
+}
+
+.cstmaccept {
+    background-color: #4a4a4a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.cstmaccept:hover {
+    background-color: #2c2c2c;
+}

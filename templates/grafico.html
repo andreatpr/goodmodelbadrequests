@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Recolección</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='grafico.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">HOME</a></li>
+                <li><a href="/edit_class">EDIT DEFAULTS</a></li>
+                <li><h1 class="site-title">recicla!</h1></li>
+                <li><a href="/grafico">SUMMARY</a></li>
+                <li><a href="/update_custom_class">ADD CLASSES</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Reporte de Recolección</h1>
+        <div class="chart-container">
+            <div id="grafico"></div>
+            {% if customgraphd %}
+                <h2>Clases Personalizadas</h2>
+                <div id="customGrafico"></div>
+            {% endif %}
+        </div>
+    </div>
+    <script>
+        var graphd = {{ graphd|safe }};
+        Plotly.newPlot('grafico', graphd.data, graphd.layout);
+
+        var customgraphd = {{ customgraphd|safe }};
+        Plotly.newPlot('customGrafico', customgraphd.data, customgraphd.layout);
+    </script>
+</body>
+</html>
